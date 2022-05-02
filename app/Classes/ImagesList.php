@@ -3,6 +3,7 @@ namespace Classes;
 
 use Config\Config;
 use Traits\SingletoneTrait;
+use Exception;
 
 class ImagesList
 {
@@ -33,9 +34,21 @@ class ImagesList
         }
     }
 
-    public function getImages()
+    public function getImages(): array
     {
         return $this->images;
     }
 
+    /**
+     * @throws Exception
+     */
+    public function getImageById($imageId)
+    {
+        foreach ($this->images as $image) {
+            if ($image['id'] === $imageId) {
+                return $image;
+            }
+        }
+        throw new Exception('image missing');
+    }
 }
