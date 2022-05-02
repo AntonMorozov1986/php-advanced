@@ -6,13 +6,13 @@ services:
       - "8099:80"
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ./app:/app
+      - ./:/app
   php:
     build:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
     volumes:
-      - ./app:/app
+      - ./:/app
       - ./docker/php-fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
   mysql:
     image: mysql:latest

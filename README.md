@@ -9,6 +9,28 @@ Learning php. Advanced level
 ```shell
 docker-compose up
 ```
+
+Войдите в контейнер используя команду
+```shell
+docker exec -it $(docker ps -f name=php-advanced_php_ -q) bash
+```
+
+Внутри контейнера перейдите в папку "/app"
+```shell
+cd /app
+```
+
+Выполните команду composer install
+```shell
+composer install
+```
+
+Выйдите из контейнера
+```shell
+exit
+```
+
+
 После запуска контейнеров проект будет доступен по адресу - http://127.0.0.1:8099
 
 Для остановки контейнеров нажмите `CTRL + C` или закройте терминал.

@@ -1,0 +1,15 @@
+{
+    "name": "anton_morozov/php-advanced",
+    "description": "Learning php",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Morozov"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "twig/twig": "^3.3"
+    }
+}
