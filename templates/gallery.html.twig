@@ -1,0 +1,17 @@
+<html lang="ru">
+{% include 'head.html.twig' %}
+<body>
+<div class="gallery">
+    <h1 class="gallery__title">Image gallery</h1>
+
+    <div class="gallery__images">
+        {% for image in images %}
+            <a class="gallery__image" href="image.php?photo={{ image.id }}">
+                <img src="./images/small/{{ image.src }}" alt="image {{ image.id }}">
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
