@@ -25,6 +25,11 @@ cd /app
 composer install
 ```
 
+Подключить autoload
+```shell
+composer dump-autoload -o
+```
+
 Выйдите из контейнера
 ```shell
 exit

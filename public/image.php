@@ -12,9 +12,9 @@ try {
     $loader = new FilesystemLoader(Config::getRoot() . '/templates');
     $twig = new Environment($loader);
 
-    $page = $twig->render('gallery.html.twig', [
-            'title' => 'image gallery',
-            'images' => $imagesList->getImages(),
+    $page = $twig->render('image.html.twig', [
+            'title' => 'image',
+            'image' => $imagesList->getImageById((int) $_GET['imageId']),
         ]
     );
 

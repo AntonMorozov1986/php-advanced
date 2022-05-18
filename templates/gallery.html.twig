@@ -1,0 +1,47 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .gallery {
+            width:858px;
+            margin:0 auto;
+            color: #212121;
+        }
+
+        .gallery__title {
+            font: normal 2em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .gallery__image {
+            float: left;
+        }
+
+        .gallery__image:hover img {
+            border:3px solid #034F80;
+        }
+
+        .gallery__image img{
+            margin:5px;
+            border:3px solid #fff;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div class="gallery">
+    <h1 class="gallery__title">Image gallery</h1>
+
+    <div class="gallery__images">
+        {% for image in images %}
+            <a class="gallery__image" href="image.php?imageId={{ image.id }}">
+                <img src="./images/small/{{ image.src }}" alt="image {{ image.id }}">
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
