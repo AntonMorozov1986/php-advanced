@@ -7,10 +7,18 @@ use Twig\Loader\FilesystemLoader;
 
 use Controllers\GetGoods;
 
-$all = GetGoods::all();
-var_dump(sizeof($all));
-$goodsList = GetGoods::some(5, 2);
-var_dump($goodsList);
+
+$quantity = GetGoods::allQuantity();
+$goodsPerPage = 6;
+$pagesQuantity = $quantity / $goodsPerPage;
+
+if (isset($_GET['page'])) {
+    $currentPage = (int) $_GET['page'];
+    $goods = GetGoods::some($currentPage * $goodsPerPage, $goodsPerPage);
+} else {
+    $currentPage = 1;
+    $goods = GetGoods::some(1, $goodsPerPage);
+}
 
 try {
     $loader = new FilesystemLoader(Config::getRoot() . '/templates');
@@ -18,7 +26,9 @@ try {
 
     $page = $twig->render('catalog.html.twig', [
             'title' => 'catalog',
-            'goods' => GetGoods::some(5, 20),
+            'goods' => $goods,
+            'pagesQuantity' => $pagesQuantity,
+            'currentPage' => $currentPage
         ]
     );
 

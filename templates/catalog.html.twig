@@ -32,10 +32,15 @@
             border-radius: 8px;
         }
 
-        .catalog__more {
+        .catalog__pagination {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .catalog__page {
             display: block;
             width: fit-content;
-            margin: 0 auto;
+            margin: 8px;
             padding: 8px;
             text-decoration: none;
             font-size: 24px;
@@ -44,6 +49,10 @@
             background: #999999;
             border: 2px solid #212121;
             border-radius: 8px;
+        }
+
+        .catalog__page--current {
+            background: coral;
         }
     </style>
 </head>
@@ -60,9 +69,12 @@
             </div>
         {% endfor %}
     </div>
+
+    <div class="catalog__pagination">
+        {% for page in 1..pagesQuantity %}
+            <a class="catalog__page {% if page == currentPage %} catalog__page--current {% endif %}" href="/?page={{ page }}">{{ page }}</a>
+        {% endfor %}
+    </div>
 </div>
-
-<a class="catalog__more" href="/?last=55">Ещё</a>
-
 </body>
 </html>

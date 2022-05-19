@@ -16,7 +16,17 @@ class GetGoods
         return self::getDb()->query($sqlQuery)->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    static private function fetchAssoc($sqlQuery)
+    {
+        return self::getDb()->query($sqlQuery)->fetch(PDO::FETCH_ASSOC);
+    }
 
+    static public function allQuantity()
+    {
+        $sqlQuery = "SELECT COUNT(id) AS quantity FROM goods";
+        $result =  self::fetchAssoc($sqlQuery);
+        return $result['quantity'];
+    }
 
     static public function all()
     {
