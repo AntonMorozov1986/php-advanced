@@ -49,7 +49,7 @@ class RegisterController extends BaseController
             $userData = [
                 'name' => $_POST['name'],
                 'email' => $_POST['email'],
-                'password' => password_hash($_POST['name'], PASSWORD_BCRYPT),
+                'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
             ];
 
             $sqlQuery = "INSERT INTO `users` (`name`, `email`, `password`) VALUES (:name, :email, :password);";
