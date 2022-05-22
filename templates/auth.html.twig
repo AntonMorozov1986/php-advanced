@@ -1,0 +1,66 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .auth-page {
+            width:100%;
+            max-width: 950px;
+            box-sizing: border-box;
+            margin:0 auto;
+            padding: 10px 60px;
+            color: #212121;
+        }
+
+        .auth-page__title {
+            font: normal 2em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .auth-page__subtitle {
+            font: normal 1.75em Arial, sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .auth-page__form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .auth-page__input {
+            display: block;
+            width: 100%;
+            margin: 8px;
+            padding: 8px;
+            border: 3px solid #212121;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="auth-page">
+    <h1 class="auth-page__title">{{ title }}</h1>
+
+    {% if result %}
+        <h2 class="auth-page__subtitle">{{ result }}</h2>
+        <a href="/">Перейти на главную страницу</a>
+    {% endif %}
+
+    <form class="auth-page__form" method="post">
+        {% for input in inputs %}
+            <input
+                class="auth-page__input"
+                type="{{ input.type }}"
+                name="{{ input.name }}"
+                placeholder="{{ input.name }}"
+                value="{{ input.value }}"
+                required
+            >
+        {% endfor %}
+    </form>
+</div>
+</body>
+</html>

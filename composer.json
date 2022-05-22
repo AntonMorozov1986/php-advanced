@@ -20,6 +20,7 @@
             "Database\\": "database/",
             "Classes\\": "app/Classes/",
             "Traits\\": "app/Traits/",
+            "Models\\": "app/Models/",
             "Controllers\\": "app/Controllers/"
         }
     }

@@ -4,20 +4,10 @@ require_once dirname(__DIR__) . '/app/init_app.php';
 use Database\Database;
 use Classes\LoremIpsum;
 
-function createTable($db, $tableName)
+function createTable($db, $sqlQuery)
 {
-    $createTableQuery = "
-            CREATE TABLE $tableName (
-                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-                `name` VARCHAR(255) NOT NULL ,
-                `description` TEXT NOT NULL ,
-                `price` INT UNSIGNED NOT NULL ,
-                 PRIMARY KEY (`id`)
-            )
-            ENGINE = InnoDB;
-        ";
-    $db->exec($createTableQuery);
-    echo "$tableName table created successfully</br>";
+    $db->exec($sqlQuery);
+    echo "table created successfully</br>";
 }
 
 function fillTable($db, $tableName, $rowQuantity)
@@ -37,13 +27,18 @@ function fillTable($db, $tableName, $rowQuantity)
     }
 }
 
+$usersTableQuery = "CREATE TABLE `users` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `name` VARCHAR(255) NOT NULL , `email` VARCHAR(255) NOT NULL , `password` VARCHAR(255) NOT NULL , PRIMARY KEY (`id`), UNIQUE (`email`)) ENGINE = InnoDB;";
+
+$goodsTableQuery = "CREATE TABLE `goods` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT, `name` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` INT UNSIGNED NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;";
+
 echo "init_db.php </br>";
 
 if ($_GET['pass'] === $_ENV['DB_PASS']) {
     echo "<h3>you pass</h3>";
     try {
         $db = Database::getInstance()->getDb();
-        createTable($db, 'goods');
+        createTable($db, $goodsTableQuery);
+        createTable($db, $usersTableQuery);
         fillTable($db,'goods', 200);
     } catch (PDOException $exception) {
         echo $exception->getMessage();

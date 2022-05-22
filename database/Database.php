@@ -8,14 +8,14 @@ class Database
 {
     use SingletoneTrait;
 
-    private $db = null;
+    private PDO $db;
 
-    public function getDb()
+    public function getDb(): PDO
     {
         return $this->db;
     }
 
-    protected function instanceInit()
+    protected function instanceInit(): void
     {
         $user = $_ENV['DB_USER'];
         $password = $_ENV['DB_PASS'];
@@ -23,7 +23,7 @@ class Database
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    private function getDSN()
+    private function getDSN(): string
     {
         $driver = $_ENV['DB_DRIVER'];
         $host = $_ENV['DB_HOST'];
