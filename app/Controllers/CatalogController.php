@@ -6,27 +6,26 @@ use Models\GoodsList;
 class CatalogController extends BaseController
 {
     private int $goodsPerPage;
-    private int $currentPage;
 
     public function __construct($goodsPerPage = 6)
     {
         parent::__construct();
 
         $this->goodsPerPage = $goodsPerPage;
-        $this->currentPage = $this->getCurrentPage();
         $this->title = 'Catalog';
         $this->templateFileName = 'catalog.html.twig';
-        $this->content = [
+        $catalogContent = [
             'catalogPath' => '/catalog',
             'goods' => $this->getGoodsList(),
             'pagesQuantity' => $this->getPagesQuantity(),
-            'currentPage' => $this->currentPage,
+            'currentPage' => $this->getCurrentPage(),
         ];
+        $this->content = array_merge($this->content, $catalogContent);
     }
 
     private function getGoodsList()
     {
-        $startId = (($this->currentPage - 1) * $this->goodsPerPage) + 1;
+        $startId = (($this->getCurrentPage() - 1) * $this->goodsPerPage) + 1;
         return GoodsList::some($startId, $this->goodsPerPage);
     }
 
