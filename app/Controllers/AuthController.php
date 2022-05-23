@@ -14,7 +14,7 @@ class AuthController extends BaseController
 
         $this->title = 'Auth Page';
         $this->templateFileName = 'auth.html.twig';
-        $this->content = [
+        $authContent = [
             'inputs' => [
                 [
                     'type' => 'text',
@@ -30,6 +30,7 @@ class AuthController extends BaseController
                 ],
             ],
         ];
+        $this->content = array_merge($this->content, $authContent);
     }
 
     function beforeRender()

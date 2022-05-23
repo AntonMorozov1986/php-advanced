@@ -51,18 +51,22 @@
         <h2 class="auth-page__subtitle">{{ result }}</h2>
     {% endif %}
 
-    <form class="auth-page__form" method="post">
-        {% for input in inputs %}
-            <input
-                class="auth-page__input"
-                type="{{ input.type }}"
-                name="{{ input.name }}"
-                placeholder="{{ input.name }}"
-                value="{{ input.value }}"
-                required
-            >
-        {% endfor %}
-    </form>
+    {% if user %}
+        <h2 class="auth-page__subtitle">{{ user }}, Вы уже вошли</h2>
+    {% else %}
+        <form class="auth-page__form" method="post">
+            {% for input in inputs %}
+                <input
+                    class="auth-page__input"
+                    type="{{ input.type }}"
+                    name="{{ input.name }}"
+                    placeholder="{{ input.name }}"
+                    value="{{ input.value }}"
+                    required
+                >
+            {% endfor %}
+        </form>
+    {% endif %}
 </div>
 </body>
 </html>
