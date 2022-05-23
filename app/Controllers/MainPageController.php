@@ -10,7 +10,7 @@ class MainPageController extends BaseController
         parent::__construct();
 
         $this->title = 'MainPage';
-        $this->content = array_merge($this->content, ['links' => Router::getRoutesLinks()]);
+        $this->addContent('links', Router::getRoutesLinks());
         $this->templateFileName = 'main.html.twig';
     }
 

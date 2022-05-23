@@ -13,26 +13,25 @@ class RegisterController extends BaseController
 
         $this->title = 'Register Page';
         $this->templateFileName = 'auth.html.twig';
-        $this->content = [
-            'inputs' => [
-                [
-                    'type' => 'text',
-                    'name' => 'name',
-                ],
-                [
-                    'type' => 'text',
-                    'name' => 'email',
-                ],
-                [
-                    'type' => 'password',
-                    'name' => 'password',
-                ],
-                [
-                    'type' => 'submit',
-                    'value' => 'Зарегистрироваться',
-                ],
+        $registerInputs = [
+            [
+                'type' => 'text',
+                'name' => 'name',
+            ],
+            [
+                'type' => 'text',
+                'name' => 'email',
+            ],
+            [
+                'type' => 'password',
+                'name' => 'password',
+            ],
+            [
+                'type' => 'submit',
+                'value' => 'Зарегистрироваться',
             ],
         ];
+        $this->addContent('inputs', $registerInputs);
     }
 
     function beforeRender()

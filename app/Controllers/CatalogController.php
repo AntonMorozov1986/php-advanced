@@ -20,7 +20,9 @@ class CatalogController extends BaseController
             'pagesQuantity' => $this->getPagesQuantity(),
             'currentPage' => $this->getCurrentPage(),
         ];
-        $this->content = array_merge($this->content, $catalogContent);
+        foreach ($catalogContent as $fieldName => $fieldValue) {
+            $this->addContent($fieldName, $fieldValue);
+        }
     }
 
     private function getGoodsList()

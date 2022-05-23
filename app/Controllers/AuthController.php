@@ -14,23 +14,21 @@ class AuthController extends BaseController
 
         $this->title = 'Auth Page';
         $this->templateFileName = 'auth.html.twig';
-        $authContent = [
-            'inputs' => [
-                [
-                    'type' => 'text',
-                    'name' => 'email',
-                ],
-                [
-                    'type' => 'password',
-                    'name' => 'password',
-                ],
-                [
-                    'type' => 'submit',
-                    'value' => 'Войти',
-                ],
+        $authInputs = [
+            [
+                'type' => 'text',
+                'name' => 'email',
+            ],
+            [
+                'type' => 'password',
+                'name' => 'password',
+            ],
+            [
+                'type' => 'submit',
+                'value' => 'Войти',
             ],
         ];
-        $this->content = array_merge($this->content, $authContent);
+        $this->addContent('inputs', $authInputs);
     }
 
     function beforeRender()

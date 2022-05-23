@@ -41,4 +41,9 @@ abstract class BaseController
             die ('ERROR: ' . $e->getMessage());
         }
     }
+
+    protected function addContent(string $fieldName, $fieldValue)
+    {
+        $this->content = array_merge($this->content, [$fieldName => $fieldValue]);
+    }
 }
