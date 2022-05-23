@@ -10,6 +10,8 @@ class CatalogController extends BaseController
 
     public function __construct($goodsPerPage = 6)
     {
+        parent::__construct();
+
         $this->goodsPerPage = $goodsPerPage;
         $this->currentPage = $this->getCurrentPage();
         $this->title = 'Catalog';

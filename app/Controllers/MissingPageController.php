@@ -5,6 +5,8 @@ class MissingPageController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
+
         $this->title = 'Not found';
         $this->templateFileName = 'missing.html.twig';
         $this->content = [

@@ -9,6 +9,8 @@ class RegisterController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
+
         $this->title = 'Register Page';
         $this->templateFileName = 'auth.html.twig';
         $this->content = [

@@ -10,6 +10,8 @@ class AuthController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
+
         $this->title = 'Auth Page';
         $this->templateFileName = 'auth.html.twig';
         $this->content = [
@@ -40,8 +42,9 @@ class AuthController extends BaseController
     public function handlePostRequest()
     {
         try {
-            $this->signIn();
-            $this->content['result'] = 'Вы успешно вошли';
+            $user = $this->signIn();
+            $this->content['result'] = "{$user['name']}, Вы успешно авторизовались";
+            setcookie('user', $user['name'], time() + 36000, '/');
         } catch (Exception $exception) {
             $this->content['result'] = $exception->getMessage();
         }
@@ -61,6 +64,7 @@ class AuthController extends BaseController
         $request->execute(['email' => $_POST['email']]);
         $result = $request->fetch(PDO::FETCH_ASSOC);
         $this->checkPassword($_POST['password'], $result['password']);
+        return $result;
     }
 
     /**
