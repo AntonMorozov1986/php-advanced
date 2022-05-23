@@ -15,4 +15,6 @@ class MissingPageController extends BaseController
             ]
         ];
     }
+
+    function beforeRender() {}
 }

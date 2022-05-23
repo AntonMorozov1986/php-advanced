@@ -41,4 +41,6 @@ class CatalogController extends BaseController
             return 1;
         }
     }
+
+    function beforeRender() {}
 }

@@ -2,61 +2,38 @@
 namespace Classes;
 
 use Controllers\BaseController;
-use Traits\SingletoneTrait;
-
 use Controllers\MainPageController;
-use Controllers\AuthController;
-use Controllers\CatalogController;
-use Controllers\RegisterController;
 use Controllers\MissingPageController;
 
-class Router
-{
-    use SingletoneTrait;
+class Router {
+    private static array $routes = [
+        'auth' => [
+            'controller' => 'Controllers\AuthController',
+            'linkText' => 'Авторизация',
+        ],
+        'register' => [
+            'controller' => 'Controllers\RegisterController',
+            'linkText' => 'Регистрация',
+        ],
+        'catalog' => [
+            'controller' => 'Controllers\CatalogController',
+            'linkText' => 'Каталог Товаров',
+        ],
+    ];
 
-    private array $routes = [];
-    public static string $currentRoute = '';
-
-    protected function instanceInit(): void
-    {
-        // TODO: Implement instanceInit() method.
-        $this->routes = [
-            'auth' => [
-                'controller' => new AuthController(),
-                'linkText' => 'Авторизация',
-            ],
-            'register' => [
-                'controller' => new RegisterController(),
-                'linkText' => 'Регистрация',
-            ],
-            'catalog' => [
-                'controller' => new CatalogController(),
-                'linkText' => 'Каталог Товаров',
-            ],
-        ];
-    }
-
-    private function isPostRequest()
-    {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
-    }
-
-    public function getController($route): BaseController
+    public static function getController($route): BaseController
     {
         if ($route === '') {
             return new MainPageController();
         }
-        if (in_array($route, array_keys($this->routes))) {
-            $controller = $this->routes[$route]['controller'];
-            if ($this->isPostRequest()) {
-                $controller->handlePostRequest();
-            }
-            return $this->routes[$route]['controller'];
+        if (in_array($route, array_keys(self::$routes))) {
+            $controllerName = self::$routes[$route]['controller'];
+            return new $controllerName();
         }
         return new MissingPageController();
     }
 
-    public function getRoutesLinks(): array
+    public static function getRoutesLinks(): array
     {
         return array_map(function ($route, $routeName)
         {
@@ -64,6 +41,11 @@ class Router
                 'href' => '/' . $routeName,
                 'text' => $route['linkText'],
             ];
-        }, $this->routes,array_keys($this->routes));
+        }, self::$routes,array_keys(self::$routes));
+    }
+
+    public static function getRequestMethode()
+    {
+        return $_SERVER['REQUEST_METHOD'];
     }
 }

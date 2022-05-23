@@ -1,0 +1,29 @@
+<div class="menu">
+    <style>
+        .menu {
+            display: flex;
+            justify-content: center;
+            max-width: 950px;
+            margin: 32px auto;
+        }
+
+        .menu__link {
+            display: block;
+            margin: 0 16px 0 0;
+            padding: 12px;
+            background-color: lightcoral;
+            color: #212121;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .menu__link:last-child {
+            margin: 0;
+        }
+    </style>
+    <a href="/" class="menu__link">Главная</a>
+
+    {% for menuLinks in menu %}
+        <a href="{{ menuLinks.href }}" class="menu__link">{{ menuLinks.text }}</a>
+    {% endfor %}
+</div>

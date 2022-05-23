@@ -33,7 +33,7 @@
         .auth-page__input {
             display: block;
             width: 100%;
-            margin: 8px;
+            margin: 8px 0;
             padding: 8px;
             border: 3px solid #212121;
             border-radius: 4px;
@@ -41,12 +41,12 @@
     </style>
 </head>
 <body>
+{% include 'menu.html.twig' %}
 <div class="auth-page">
     <h1 class="auth-page__title">{{ title }}</h1>
 
     {% if result %}
         <h2 class="auth-page__subtitle">{{ result }}</h2>
-        <a href="/">Перейти на главную страницу</a>
     {% endif %}
 
     <form class="auth-page__form" method="post">

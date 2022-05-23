@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Classes\Router;
 use Database\Database;
 use PDO;
 use Exception;
@@ -29,35 +30,42 @@ class AuthController extends BaseController
         ];
     }
 
+    function beforeRender()
+    {
+        if (Router::getRequestMethode() === 'POST') {
+            $this->handlePostRequest();
+        }
+    }
+
     public function handlePostRequest()
     {
         try {
             $this->signIn();
             $this->content['result'] = 'Вы успешно вошли';
         } catch (Exception $exception) {
-            echo "Что-то пошло не так";
+            $this->content['result'] = $exception->getMessage();
         }
 
     }
 
+    /**
+     * @throws Exception
+     */
     private function signIn()
     {
-        try {
-            $db = Database::getInstance()->getDb();
+        $db = Database::getInstance()->getDb();
 
-            $sqlQuery = "SELECT * FROM `users` WHERE email = :email";
+        $sqlQuery = "SELECT * FROM `users` WHERE email = :email";
 
-            $request = $db->prepare($sqlQuery);
-            $request->execute(['email' => $_POST['email']]);
-            $result = $request->fetch(PDO::FETCH_ASSOC);
-            $this->checkPassword($_POST['password'], $result['password']);
-        } catch (Exception $exception) {
-            echo $exception->getMessage() . "</br>";
-            throw $exception;
-        }
-
+        $request = $db->prepare($sqlQuery);
+        $request->execute(['email' => $_POST['email']]);
+        $result = $request->fetch(PDO::FETCH_ASSOC);
+        $this->checkPassword($_POST['password'], $result['password']);
     }
 
+    /**
+     * @throws Exception
+     */
     private function checkPassword($pass, $hash)
     {
         $result = password_verify($pass, $hash);

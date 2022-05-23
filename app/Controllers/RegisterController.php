@@ -33,34 +33,35 @@ class RegisterController extends BaseController
         ];
     }
 
+    function beforeRender()
+    {
+        if (Router::getRequestMethode() === 'POST') {
+            $this->handlePostRequest();
+        }
+    }
+
     public function handlePostRequest()
     {
         try {
             $this->createNewUser();
             $this->content['result'] = 'Вы успешно зарегистрировались';
         } catch (PDOException $exception) {
-            echo "Что-то пошло не так";
+            $this->content['result'] = $exception->getMessage();
         }
     }
 
     private function createNewUser()
     {
-        try {
-            $userData = [
-                'name' => $_POST['name'],
-                'email' => $_POST['email'],
-                'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
-            ];
+        $userData = [
+            'name' => $_POST['name'],
+            'email' => $_POST['email'],
+            'password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+        ];
 
-            $sqlQuery = "INSERT INTO `users` (`name`, `email`, `password`) VALUES (:name, :email, :password);";
+        $sqlQuery = "INSERT INTO `users` (`name`, `email`, `password`) VALUES (:name, :email, :password);";
 
-            $db = Database::getInstance()->getDb();
-            $request = $db->prepare($sqlQuery);
-            $request->execute($userData);
-        } catch (PDOException $exception) {
-            echo $exception->getMessage();
-            throw $exception;
-        }
-
+        $db = Database::getInstance()->getDb();
+        $request = $db->prepare($sqlQuery);
+        $request->execute($userData);
     }
 }

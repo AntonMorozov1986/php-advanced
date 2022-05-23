@@ -14,18 +14,13 @@ abstract class BaseController
     protected string $templateFileName;
     protected array $content;
 
+    abstract function beforeRender();
+
     public function render() {
+        $this->beforeRender();
+        $menu = ['menu' => Router::getRoutesLinks()];
+        $this->content = array_merge($this->content, $menu);
         echo $this->getTemplate();
-    }
-
-    protected function isGetRequest()
-    {
-        return $_SERVER['REQUEST_METHOD'] === 'GET';
-    }
-
-    protected function isPostRequest()
-    {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
     protected function getTemplate()
