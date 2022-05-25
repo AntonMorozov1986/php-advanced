@@ -39,7 +39,5 @@ class GoodsList
         $lastId = ($startId + $limit) - 1;
         $sqlQuery = "SELECT * FROM goods WHERE id >= $startId and id <= $lastId";
         return  self::fetchAllAssoc($sqlQuery);
-
-
     }
 }

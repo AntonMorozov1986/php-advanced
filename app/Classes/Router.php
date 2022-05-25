@@ -19,6 +19,10 @@ class Router {
             'controller' => 'Controllers\CatalogController',
             'linkText' => 'Каталог Товаров',
         ],
+        'logout' => [
+            'controller' => 'Controllers\LogoutController',
+            'linkText' => 'Выход',
+        ]
     ];
 
     public static function getController($route): BaseController

@@ -13,7 +13,7 @@ class MissingPageController extends BaseController
             'subtitle' => '404 - такой страницы нет',
             'link' => [
                 'href' => '/',
-                'text' => 'Вернуться назад'
+                'text' => 'Вернуться на Главную'
             ]
         ];
     }
