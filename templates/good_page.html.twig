@@ -1,0 +1,47 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .good-page {
+            max-width: 90vw;
+            margin: 0 auto;
+            padding: 0 10vw;
+        }
+
+        .good-page__title {
+            margin: 0;
+        }
+
+        .good-page__back-link,
+        .good-page__add {
+            display: block;
+            margin: 16px 0;
+            padding: 8px;
+            background-color: lightcoral;
+            border: 1px solid #212121;
+            border-radius: 4px;
+            color: #212121;
+            text-decoration: none;
+        }
+
+        .good-page__img {
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="good-page">
+    <h1 class="good-page__title">Good: {{ good.name}}</h1>
+    <a href="/catalog" class="good-page__back-link">Вернуться назад</a>
+    <img class="good-page__img" src="{{ good.big_image }}" alt="{{ good.name }}">
+    <h3 class="good-page__name">Наименование: {{ good.name }}</h3>
+    <p class="good-page__description">Описание: {{ good.description }}</p>
+    <p class="good-page__id">id: {{ good.id }}</p>
+    <p class="good-page__price">Цена: {{ good.price }} руб.</p>
+    <a class="good-page__add" href="#">Добавить в корзину</a>
+</div>
+
+</body>
+</html>

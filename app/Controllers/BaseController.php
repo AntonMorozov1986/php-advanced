@@ -14,12 +14,14 @@ abstract class BaseController
     protected string $title = '';
     protected string $templateFileName = '';
     protected array $content = [];
+    protected array $params = [];
     private User $user;
 
     abstract function beforeRender();
 
-    public function __construct()
+    public function __construct($params = [])
     {
+        $this->params = $params;
         $this->initUser();
     }
 
@@ -27,7 +29,6 @@ abstract class BaseController
         $this->beforeRender();
         $menu = ['menu' => Router::getRoutesLinks()];
         $this->content = array_merge($this->content, $menu);
-        var_dump($_SESSION);
         echo $this->getTemplate();
     }
 

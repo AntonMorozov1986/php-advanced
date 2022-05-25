@@ -3,7 +3,7 @@ namespace Controllers;
 
 use Models\GoodsList;
 
-class CatalogController extends BaseController
+class GoodController extends BaseController
 {
     private int $goodsPerPage = 6;
 
@@ -11,17 +11,11 @@ class CatalogController extends BaseController
     {
         parent::__construct($params);
 
-        $this->title = 'Catalog';
-        $this->templateFileName = 'catalog.html.twig';
-        $catalogContent = [
-            'catalogPath' => '/catalog',
-            'goods' => $this->getGoodsList(),
-            'pagesQuantity' => $this->getPagesQuantity(),
-            'currentPage' => $this->getCurrentPage(),
-        ];
-        foreach ($catalogContent as $fieldName => $fieldValue) {
-            $this->addContent($fieldName, $fieldValue);
-        }
+//        $this->goodsPerPage = $goodsPerPage;
+        $this->title = 'GoodPage';
+        $this->templateFileName = 'good_page.html.twig';
+        var_dump($this->params);
+        $this->addContent('good', GoodsList::getGoodById($this->params[0]));
     }
 
     private function getGoodsList()

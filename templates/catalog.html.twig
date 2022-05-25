@@ -4,10 +4,10 @@
     <style>
         .catalog {
             width:100%;
-            max-width: 950px;
+            max-width: 90vw;
             box-sizing: border-box;
             margin:0 auto;
-            padding: 10px 60px;
+            padding: 4vh 10vh;
             color: #212121;
         }
 
@@ -29,17 +29,10 @@
             flex-direction: column;
             margin: 10px;
             padding: 10px;
-            max-width: 24%;
+            max-width: 21vw;
             border: 1px solid #444444;
             border-radius: 8px;
-        }
-
-        .catalog__good > img {
-            max-width: 100%;
-        }
-
-        .catalog__description {
-            flex-grow: 2;
+            background-color: lightblue;
         }
 
         .catalog__good > a {
@@ -55,13 +48,28 @@
             margin-bottom: 8px;
         }
 
+        .catalog__good > a:first-child {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 2;
+        }
+
         .catalog__good > a:last-child {
             margin: 0;
+        }
+
+        .catalog__good img {
+            max-width: 100%;
+        }
+
+        .catalog__description {
+            flex-grow: 2;
         }
 
         .catalog__pagination {
             display: flex;
             flex-wrap: wrap;
+            justify-content: space-around;
         }
 
         .catalog__page {
@@ -93,10 +101,13 @@
     <div class="catalog__list">
         {% for good in goods %}
             <div class="catalog__good">
-                <img src="{{ good.preview_image }}" alt="{{ good.name }}">
-                <h3>{{ good.name }}</h3>
-                <p class="catalog__description">{{ good.description }}</p>
-                <p>id: {{ good.id }}</p>
+                <a href="/good/{{ good.id }}">
+                    <img src="{{ good.preview_image }}" alt="{{ good.name }}">
+                    <h3>{{ good.name }}</h3>
+                    <p class="catalog__description">{{ good.description }}</p>
+                    <p>id: {{ good.id }}</p>
+                    <p>Цена: {{ good.price }} руб.</p>
+                </a>
                 <a href="/good/{{ good.id }}">Подробнее</a>
                 <a href="#">Добавить в корзину</a>
             </div>

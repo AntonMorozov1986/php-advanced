@@ -9,9 +9,9 @@ use Exception;
 
 class AuthController extends BaseController
 {
-    public function __construct()
+    public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->title = 'Auth Page';
         $this->templateFileName = 'auth.html.twig';

@@ -5,9 +5,9 @@ use Classes\Router;
 
 class LogoutController extends BaseController
 {
-    public function __construct()
+    public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->title = 'Logout';
         $this->templateFileName = 'logout.html.twig';

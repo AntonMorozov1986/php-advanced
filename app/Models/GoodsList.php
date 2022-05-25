@@ -11,14 +11,22 @@ class GoodsList
         return Database::getInstance()->getDb();
     }
 
-    static private function fetchAllAssoc($sqlQuery)
+    static private function request(string $sqlQuery = "", array $params = [])
     {
-        return self::getDb()->query($sqlQuery)->fetchAll(PDO::FETCH_ASSOC);
+        $db = self::getDb();
+        $statement = $db->prepare($sqlQuery);
+        $statement->execute($params);
+        return $statement;
     }
 
-    static private function fetchAssoc($sqlQuery)
+    static private function fetchAllAssoc(string $sqlQuery = "", array $params = [])
     {
-        return self::getDb()->query($sqlQuery)->fetch(PDO::FETCH_ASSOC);
+        return self::request($sqlQuery, $params)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    static private function fetchAssoc(string $sqlQuery = '', array $params = [])
+    {
+        return self::request($sqlQuery, $params)->fetch(PDO::FETCH_ASSOC);
     }
 
     static public function allQuantity()
@@ -37,7 +45,18 @@ class GoodsList
     static public function some($startId = 1, $limit = 3)
     {
         $lastId = ($startId + $limit) - 1;
-        $sqlQuery = "SELECT * FROM goods WHERE id >= $startId and id <= $lastId";
-        return  self::fetchAllAssoc($sqlQuery);
+        $sqlQuery = "SELECT * FROM goods WHERE id >= :startId and id <= :lastId";
+        $params = [
+            'startId' => $startId,
+            'lastId' => $lastId,
+        ];
+        return  self::fetchAllAssoc($sqlQuery, $params);
+    }
+
+    static public function getGoodById($goodId)
+    {
+        $sqlQuery = "SELECT * FROM goods WHERE id = :goodId";
+        $params = ['goodId' => $goodId];
+        return self::fetchAssoc($sqlQuery, $params);
     }
 }

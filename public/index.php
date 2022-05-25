@@ -8,6 +8,6 @@ $_SESSION['test'] = 'test';
 
 $uri = parse_url($_SERVER['REQUEST_URI']);
 $path_parts = explode('/', $uri['path']);
-$route = array_slice($path_parts, 1, 1);
+$route = array_slice($path_parts, 1);
 $controller = Router::getController(...$route);
 $controller->render();
