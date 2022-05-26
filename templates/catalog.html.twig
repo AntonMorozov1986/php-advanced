@@ -18,6 +18,13 @@
             padding: 0;
         }
 
+        .catalog__subtitle {
+            font: normal 1.2em Arial,sans-serif;
+            font-weight: 600;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
         .catalog__list {
             display: flex;
             flex-wrap: wrap;
@@ -35,7 +42,8 @@
             background-color: lightblue;
         }
 
-        .catalog__good > a {
+        .catalog__good > a,
+        .catalog__good input {
             display: block;
             width: 100%;
             padding: 6px;
@@ -46,6 +54,11 @@
             border: 1px solid #212121;
             border-radius: 8px;
             margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .catalog__good input[hidden] {
+            display: none;
         }
 
         .catalog__good > a:first-child {
@@ -98,6 +111,10 @@
 <div class="catalog">
     <h1 class="catalog__title">{{ title }}</h1>
 
+    {% if result %}
+        <h3 class="catalog__subtitle">{{ result }}</h3>
+    {% endif %}
+
     <div class="catalog__list">
         {% for good in goods %}
             <div class="catalog__good">
@@ -109,7 +126,11 @@
                     <p>Цена: {{ good.price }} руб.</p>
                 </a>
                 <a href="/good/{{ good.id }}">Подробнее</a>
-                <a href="#">Добавить в корзину</a>
+                <h4>{{ good.cart_entry_id }}</h4>
+                <form method="post">
+                    <input type="text" name="good-id" value="{{ good.id }}" hidden>
+                    <input type="submit" value="Добавить в корзину">
+                </form>
             </div>
         {% endfor %}
     </div>

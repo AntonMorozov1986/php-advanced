@@ -1,0 +1,106 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .cart {
+            width:100%;
+            max-width: 90vw;
+            box-sizing: border-box;
+            margin:0 auto;
+            padding: 4vh 10vh;
+            color: #212121;
+        }
+
+        .cart__title {
+            font: normal 2em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .cart__list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .cart__good {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            padding: 10px;
+            max-width: 21vw;
+            border: 1px solid #444444;
+            border-radius: 8px;
+            background-color: lightblue;
+        }
+
+        .cart__good > a,
+        .cart__good input {
+            display: block;
+            width: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+            background-color: lightcoral;
+            text-decoration: none;
+            color: #212121;
+            border: 1px solid #212121;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .cart__good input[hidden] {
+            display: none;
+        }
+
+        .cart__good > a:first-child {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 2;
+        }
+
+        .cart__good > a:last-child {
+            margin: 0;
+        }
+
+        .cart__good img {
+            max-width: 100%;
+        }
+
+        .cart__description {
+            flex-grow: 2;
+        }
+    </style>
+</head>
+<body>
+{% include 'menu.html.twig' %}
+{% include 'greeting.html.twig' %}
+
+<div class="cart">
+    <h1 class="cart__title">{{ title }}</h1>
+
+    {% if not cart %}
+    <h3 class="cart__subtitle">Ваша корзина пуста</h3>
+    {% else %}
+    <div class="cart__list">
+        {% for good in cart %}
+            <div class="cart__good">
+                <a href="/good/{{ good.id }}">
+                    <img src="{{ good.preview_image }}" alt="{{ good.name }}">
+                    <h3>{{ good.name }}</h3>
+                    <p class="cart__description">{{ good.description }}</p>
+                    <p>id: {{ good.id }}</p>
+                    <p>Цена: {{ good.price }} руб.</p>
+                </a>
+                <a href="/good/{{ good.id }}">Подробнее</a>
+                <form method="post">
+                    <input type="text" name="cart-id" value="{{ good.cart_entry_id }}" hidden>
+                    <input type="submit" value="Удалить из корзину">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

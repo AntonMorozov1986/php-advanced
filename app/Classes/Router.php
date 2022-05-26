@@ -19,13 +19,17 @@ class Router {
             'controller' => 'Controllers\CatalogController',
             'linkText' => 'Каталог Товаров',
         ],
+        'cart' => [
+            'controller' => 'Controllers\CartController',
+            'linkText' => 'Корзина'
+        ],
         'logout' => [
             'controller' => 'Controllers\LogoutController',
             'linkText' => 'Выход',
         ],
         'good' => [
             'controller' => 'Controllers\GoodController',
-        ]
+        ],
     ];
 
     public static function getController($mainRoute, ...$params): BaseController

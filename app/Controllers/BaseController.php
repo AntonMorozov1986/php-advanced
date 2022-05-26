@@ -17,7 +17,7 @@ abstract class BaseController
     protected array $params = [];
     private User $user;
 
-    abstract function beforeRender();
+    abstract protected function beforeRender();
 
     public function __construct($params = [])
     {
@@ -51,8 +51,8 @@ abstract class BaseController
 
     protected function initUser()
     {
-        if ($_SESSION['user']) {
-            $this->user = new User($_SESSION['user']);
+        $this->user = new User($_SESSION['user'] ?? []);
+        if ($this->user->getId()) {
             $this->addContent('user', $this->user->getName());
         }
     }

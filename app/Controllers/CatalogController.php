@@ -1,6 +1,9 @@
 <?php
 namespace Controllers;
 
+use Classes\Router;
+use Exception;
+use Models\Cart;
 use Models\GoodsList;
 
 class CatalogController extends BaseController
@@ -44,5 +47,20 @@ class CatalogController extends BaseController
         }
     }
 
-    function beforeRender() {}
+    protected function beforeRender() {
+        if (Router::getRequestMethode() === 'POST') {
+            try {
+                $this->addGoodToCart();
+                $this->addContent('result', 'Товар добавлен');
+            } catch (Exception $exception) {
+                $this->addContent('result', $exception->getMessage());
+            }
+        }
+    }
+
+    private function addGoodToCart() {
+        Cart::add($this->getUser()->getId(), $_POST['good-id']);
+    }
+
+
 }
