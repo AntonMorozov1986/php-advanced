@@ -27,14 +27,30 @@ function fillTable($rowQuantity)
         $db = Database::getInstance()->getDb();
         $request = $db->prepare($sqlQuery);
 
+        $imagesPath =  '/assets/images/';
+
         for ($i = 0; $i < $rowQuantity; $i++) {
             $imageIndex = $i >= sizeof($imagesList) ? $i - sizeof($imagesList) : $i;
+
+            $previewImageFileName =$imagesPath . $imagesList[$imageIndex]['id'] . '-prev.jpg';
+            $bigImageFileName =$imagesPath . $imagesList[$imageIndex]['id'] . '-big.jpg';
+            $previewImageFile = fopen(__DIR__ . $previewImageFileName, 'w');
+            $bigImageFile = fopen(__DIR__ . $bigImageFileName, 'w');
+            $curlPrevImg = curl_init($imagesList[$imageIndex]['webformatURL']);
+            $curlBigImg = curl_init($imagesList[$imageIndex]['largeImageURL']);
+
+            curl_setopt($curlPrevImg, CURLOPT_FILE, $previewImageFile);
+            curl_setopt($curlBigImg, CURLOPT_FILE, $bigImageFile);
+
+            curl_exec($curlPrevImg);
+            curl_exec($curlBigImg);
+
             $requestParams = [
                 'name' => $loremIpsum->word(),
                 'description' => $loremIpsum->words(12),
                 'price' => rand(1, 100000),
-                'previewImage' => $imagesList[$imageIndex]['webformatURL'],
-                'bigImage' => $imagesList[$imageIndex]['largeImageURL'],
+                'previewImage' => $previewImageFileName,
+                'bigImage' => $bigImageFileName,
             ];
             $request->execute($requestParams);
         }
