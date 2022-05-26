@@ -31,6 +31,7 @@ class Cart
                 `cart`.`id` AS `cart_entry_id`,
                 `goods`.`id`,
                 `goods`.`name`,
+                `goods`.`description`,
                 `goods`.`price`,
                 `goods`.`preview_image`
             FROM `cart`

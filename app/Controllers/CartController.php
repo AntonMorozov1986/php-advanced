@@ -20,7 +20,6 @@ class CartController extends BaseController
         foreach ($catalogContent as $fieldName => $fieldValue) {
             $this->addContent($fieldName, $fieldValue);
         }
-        var_dump($this->content);
     }
 
     private function getCartList()
