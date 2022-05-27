@@ -7,9 +7,9 @@ use PDOException;
 
 class RegisterController extends BaseController
 {
-    public function __construct()
+    public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->title = 'Register Page';
         $this->templateFileName = 'auth.html.twig';

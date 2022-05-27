@@ -1,0 +1,31 @@
+---
+version: '3.7'
+
+networks:
+   traefik-net:
+      name: traefik_net
+
+services:
+  traefik:
+    image: traefik:2.2
+    container_name: traefik
+    restart: always
+    privileged: true
+    command:
+       #- --log.level=DEBUG
+    - --providers.docker=true
+    - --api.insecure=true
+    - --api.dashboard=true
+    - --entrypoints.web.address=:80
+    ports:
+      - 80:80
+      - 8080:8080
+    networks:
+      traefik-net:
+        aliases:
+          - ${PROJECT_LOCAL_HOSTNAME}
+      default:
+        aliases:
+          - ${PROJECT_LOCAL_HOSTNAME}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock

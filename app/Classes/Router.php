@@ -19,29 +19,45 @@ class Router {
             'controller' => 'Controllers\CatalogController',
             'linkText' => 'Каталог Товаров',
         ],
+        'cart' => [
+            'controller' => 'Controllers\CartController',
+            'linkText' => 'Корзина'
+        ],
+        'logout' => [
+            'controller' => 'Controllers\LogoutController',
+            'linkText' => 'Выход',
+        ],
+        'good' => [
+            'controller' => 'Controllers\GoodController',
+        ],
     ];
 
-    public static function getController($route): BaseController
+    public static function getController($mainRoute, ...$params): BaseController
     {
-        if ($route === '') {
+        if ($mainRoute === '') {
             return new MainPageController();
         }
-        if (in_array($route, array_keys(self::$routes))) {
-            $controllerName = self::$routes[$route]['controller'];
-            return new $controllerName();
+        if (in_array($mainRoute, array_keys(self::$routes))) {
+            $controllerName = self::$routes[$mainRoute]['controller'];
+            return new $controllerName($params);
         }
         return new MissingPageController();
     }
 
     public static function getRoutesLinks(): array
     {
+        $routesWithText = array_filter(self::$routes, function ($route)
+        {
+            return (bool) $route['linkText'];
+        });
+
         return array_map(function ($route, $routeName)
         {
             return [
                 'href' => '/' . $routeName,
                 'text' => $route['linkText'],
             ];
-        }, self::$routes,array_keys(self::$routes));
+        }, $routesWithText,array_keys($routesWithText));
     }
 
     public static function getRequestMethode()

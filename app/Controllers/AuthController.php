@@ -3,14 +3,15 @@ namespace Controllers;
 
 use Classes\Router;
 use Database\Database;
+use Models\User;
 use PDO;
 use Exception;
 
 class AuthController extends BaseController
 {
-    public function __construct()
+    public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->title = 'Auth Page';
         $this->templateFileName = 'auth.html.twig';
@@ -41,9 +42,8 @@ class AuthController extends BaseController
     public function handlePostRequest()
     {
         try {
-            $user = $this->signIn();
-            $this->content['result'] = "{$user['name']}, Вы успешно авторизовались";
-            setcookie('user', $user['name'], time() + 36000, '/');
+            $this->signIn();
+            $this->content['result'] = "{$this->getUser()->getName()}, Вы успешно авторизовались";
         } catch (Exception $exception) {
             $this->content['result'] = $exception->getMessage();
         }
@@ -63,7 +63,9 @@ class AuthController extends BaseController
         $request->execute(['email' => $_POST['email']]);
         $result = $request->fetch(PDO::FETCH_ASSOC);
         $this->checkPassword($_POST['password'], $result['password']);
-        return $result;
+        $this->setUser(new User($result));
+        $this->addContent('user', $this->getUser()->getName());
+        $_SESSION['user'] = $this->getUser()->getInfo();
     }
 
     /**

@@ -1,17 +1,19 @@
 <?php
 namespace Controllers;
 
+use Classes\Router;
+use Exception;
+use Models\Cart;
 use Models\GoodsList;
 
 class CatalogController extends BaseController
 {
-    private int $goodsPerPage;
+    private int $goodsPerPage = 6;
 
-    public function __construct($goodsPerPage = 6)
+    public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
-        $this->goodsPerPage = $goodsPerPage;
         $this->title = 'Catalog';
         $this->templateFileName = 'catalog.html.twig';
         $catalogContent = [
@@ -45,5 +47,20 @@ class CatalogController extends BaseController
         }
     }
 
-    function beforeRender() {}
+    protected function beforeRender() {
+        if (Router::getRequestMethode() === 'POST') {
+            try {
+                $this->addGoodToCart();
+                $this->addContent('result', 'Товар добавлен');
+            } catch (Exception $exception) {
+                $this->addContent('result', $exception->getMessage());
+            }
+        }
+    }
+
+    private function addGoodToCart() {
+        Cart::add($this->getUser()->getId(), $_POST['good-id']);
+    }
+
+
 }

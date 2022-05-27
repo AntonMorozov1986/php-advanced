@@ -42,17 +42,19 @@
 </head>
 <body>
 {% include 'menu.html.twig' %}
-{% include 'greating.html.twig' %}
+{% include 'greeting.html.twig' %}
 
 <div class="auth-page">
     <h1 class="auth-page__title">{{ title }}</h1>
 
-    {% if result %}
-        <h2 class="auth-page__subtitle">{{ result }}</h2>
-    {% endif %}
-
-    {% if user %}
-        <h2 class="auth-page__subtitle">{{ user }}, Вы уже вошли</h2>
+    {% if result or user %}
+        <h2 class="auth-page__subtitle">
+            {% if result %}
+                {{ result }}
+            {% else %}
+                {{ user }}, Вы уже авторизовались
+            {% endif %}
+        </h2>
     {% else %}
         <form class="auth-page__form" method="post">
             {% for input in inputs %}
