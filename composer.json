@@ -23,7 +23,8 @@
             "Classes\\": "app/Classes/",
             "Traits\\": "app/Traits/",
             "Models\\": "app/Models/",
-            "Controllers\\": "app/Controllers/"
+            "Controllers\\": "app/Controllers/",
+            "Tests\\": "tests/"
         }
     },
     "require-dev": {

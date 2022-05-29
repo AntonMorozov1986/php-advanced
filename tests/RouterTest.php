@@ -1,5 +1,5 @@
 <?php
-namespace Test;
+namespace Tests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -7,9 +7,6 @@ use Classes\Router;
 use Controllers\BaseController;
 use Controllers\MainPageController;
 use Controllers\MissingPageController;
-
-use Dotenv\Dotenv;
-use Config\Config;
 
 class RouterTest extends TestCase
 {
