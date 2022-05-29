@@ -12,16 +12,31 @@
             margin: 0;
         }
 
+        .good-page__subtitle {
+            font: normal 1.2em Arial,sans-serif;
+            font-weight: 600;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
         .good-page__back-link,
-        .good-page__add {
+        .good-page input {
             display: block;
+            width: 100%;
             margin: 16px 0;
             padding: 8px;
             background-color: lightcoral;
             border: 1px solid #212121;
             border-radius: 4px;
             color: #212121;
+            font-size: inherit;
+            font-weight: inherit;
             text-decoration: none;
+            cursor: pointer;
+        }
+
+        .good-page input[hidden] {
+            display: none;
         }
 
         .good-page__img {
@@ -34,13 +49,22 @@
 <body>
 <div class="good-page">
     <h1 class="good-page__title">Good: {{ good.name}}</h1>
+
+    {% if result %}
+        <h3 class="good-page__subtitle">{{ result }}</h3>
+    {% endif %}
+
     <a href="/catalog" class="good-page__back-link">Вернуться назад</a>
     <img class="good-page__img" src="{{ good.big_image }}" alt="{{ good.name }}">
     <h3 class="good-page__name">Наименование: {{ good.name }}</h3>
     <p class="good-page__description">Описание: {{ good.description }}</p>
     <p class="good-page__id">id: {{ good.id }}</p>
     <p class="good-page__price">Цена: {{ good.price }} руб.</p>
-    <a class="good-page__add" href="#">Добавить в корзину</a>
+
+    <form method="post">
+        <input type="text" name="good-id" value="{{ good.id }}" hidden>
+        <input type="submit" value="Добавить в корзину">
+    </form>
 </div>
 
 </body>
