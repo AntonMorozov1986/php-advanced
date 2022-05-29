@@ -10,21 +10,12 @@ class CatalogController extends BaseController
 {
     private int $goodsPerPage = 6;
 
-    public function __construct($params)
+    public function __construct($params = [])
     {
         parent::__construct($params);
 
         $this->title = 'Catalog';
         $this->templateFileName = 'catalog.html.twig';
-        $catalogContent = [
-            'catalogPath' => '/catalog',
-            'goods' => $this->getGoodsList(),
-            'pagesQuantity' => $this->getPagesQuantity(),
-            'currentPage' => $this->getCurrentPage(),
-        ];
-        foreach ($catalogContent as $fieldName => $fieldValue) {
-            $this->addContent($fieldName, $fieldValue);
-        }
     }
 
     private function getGoodsList()
@@ -55,6 +46,15 @@ class CatalogController extends BaseController
             } catch (Exception $exception) {
                 $this->addContent('result', $exception->getMessage());
             }
+        }
+        $catalogContent = [
+            'catalogPath' => '/catalog',
+            'goods' => $this->getGoodsList(),
+            'pagesQuantity' => $this->getPagesQuantity(),
+            'currentPage' => $this->getCurrentPage(),
+        ];
+        foreach ($catalogContent as $fieldName => $fieldValue) {
+            $this->addContent($fieldName, $fieldValue);
         }
     }
 

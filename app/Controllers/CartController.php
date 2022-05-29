@@ -7,19 +7,12 @@ use Models\Cart;
 
 class CartController extends BaseController
 {
-    public function __construct($params)
+    public function __construct($params = [])
     {
         parent::__construct($params);
 
         $this->title = 'Cart';
         $this->templateFileName = 'cart.html.twig';
-
-        $catalogContent = [
-            'cart' => $this->getCartList(),
-        ];
-        foreach ($catalogContent as $fieldName => $fieldValue) {
-            $this->addContent($fieldName, $fieldValue);
-        }
     }
 
     private function getCartList()
@@ -40,6 +33,13 @@ class CartController extends BaseController
             } catch (Exception $exception) {
                 $this->addContent('result', $exception->getMessage());
             }
+        }
+
+        $catalogContent = [
+            'cart' => $this->getCartList(),
+        ];
+        foreach ($catalogContent as $fieldName => $fieldValue) {
+            $this->addContent($fieldName, $fieldValue);
         }
     }
 

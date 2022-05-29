@@ -9,12 +9,11 @@ use Models\GoodsList;
 
 class GoodController extends BaseController
 {
-    public function __construct($params)
+    public function __construct($params = [])
     {
         parent::__construct($params);
         $this->title = 'GoodPage';
         $this->templateFileName = 'good_page.html.twig';
-        $this->addContent('good', GoodsList::getGoodById($this->params[0]));
     }
 
     function beforeRender() {
@@ -26,6 +25,8 @@ class GoodController extends BaseController
                 $this->addContent('result', $exception->getMessage());
             }
         }
+
+        $this->addContent('good', GoodsList::getGoodById($this->params[0]));
     }
 
     private function addGoodToCart() {

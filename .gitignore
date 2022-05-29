@@ -4,3 +4,5 @@
 /vendor/
 /example/
 /public/assets/
+
+.phpunit.result.cache
