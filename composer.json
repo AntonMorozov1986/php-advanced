@@ -10,13 +10,18 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "twig/twig": "^3.3"
+        "twig/twig": "^3.3",
+        "vlucas/phpdotenv": "^5.4",
+        "ext-pdo": "*"
     },
     "autoload": {
         "psr-4": {
             "Config\\": "config/",
+            "Database\\": "database/",
             "Classes\\": "app/Classes/",
-            "Traits\\": "app/Traits/"
+            "Traits\\": "app/Traits/",
+            "Models\\": "app/Models/",
+            "Controllers\\": "app/Controllers/"
         }
     }
 }

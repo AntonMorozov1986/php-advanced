@@ -1,0 +1,83 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .catalog {
+            width:100%;
+            max-width: 950px;
+            box-sizing: border-box;
+            margin:0 auto;
+            padding: 10px 60px;
+            color: #212121;
+        }
+
+        .catalog__title {
+            font: normal 2em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .catalog__list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .catalog__good {
+            margin: 10px;
+            padding: 10px;
+            max-width: 24%;
+            border: 1px solid #444444;
+            border-radius: 8px;
+        }
+
+        .catalog__pagination {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .catalog__page {
+            display: block;
+            width: fit-content;
+            margin: 8px;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 500;
+            color: #212121;
+            background: #999999;
+            border: 2px solid #212121;
+            border-radius: 8px;
+        }
+
+        .catalog__page--current {
+            background: coral;
+        }
+    </style>
+</head>
+<body>
+{% include 'menu.html.twig' %}
+{% include 'greating.html.twig' %}
+
+<div class="catalog">
+    <h1 class="catalog__title">{{ title }}</h1>
+
+    <div class="catalog__list">
+        {% for good in goods %}
+            <div class="catalog__good">
+                <h3>{{ good.name }}</h3>
+                <p>{{ good.description }}</p>
+                <p>id: {{ good.id }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="catalog__pagination">
+        {% for page in 1..pagesQuantity %}
+            <a class="catalog__page {% if page == currentPage %} catalog__page--current {% endif %}" href="{{ catalogPath }}?page={{ page }}">{{ page }}</a>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

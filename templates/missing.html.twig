@@ -1,0 +1,51 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .missing-page {
+            width:100%;
+            max-width: 950px;
+            box-sizing: border-box;
+            margin:0 auto;
+            padding: 10px 60px;
+            color: #212121;
+        }
+
+        .missing-page__title {
+            font: normal 2em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .missing-page__subtitle {
+            font: normal 1.75em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .missing-page__link {
+            display: block;
+            margin: 10px;
+            padding: 10px;
+            width: 100%;
+            background-color: lightcoral;
+            border: 1px solid #444444;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            color: #212121;
+        }
+    </style>
+</head>
+<body>
+<div class="missing-page">
+    <h1 class="missing-page__title">{{ title }}</h1>
+
+    <h2 class="missing-page__subtitle">{{ subtitle }}</h2>
+
+    <a class="missing-page__link" href="{{ link.href }}">{{ link.text }}</a>
+</div>
+</body>
+</html>
