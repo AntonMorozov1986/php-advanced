@@ -1,0 +1,147 @@
+<html lang="ru">
+<head>
+    {% include 'head.html.twig' %}
+    <style>
+        .catalog {
+            width:100%;
+            max-width: 90vw;
+            box-sizing: border-box;
+            margin:0 auto;
+            padding: 4vh 10vh;
+            color: #212121;
+        }
+
+        .catalog__title {
+            font: normal 2em Arial,sans-serif;
+            font-weight: 700;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .catalog__subtitle {
+            font: normal 1.2em Arial,sans-serif;
+            font-weight: 600;
+            margin: 5px 5px 25px;
+            padding: 0;
+        }
+
+        .catalog__list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .catalog__good {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            padding: 10px;
+            max-width: 21vw;
+            border: 1px solid #444444;
+            border-radius: 8px;
+            background-color: lightblue;
+        }
+
+        .catalog__good > a,
+        .catalog__good input {
+            display: block;
+            width: 100%;
+            padding: 6px;
+            box-sizing: border-box;
+            background-color: lightcoral;
+            text-decoration: none;
+            color: #212121;
+            font-size: inherit;
+            font-weight: inherit;
+            border: 1px solid #212121;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .catalog__good input[hidden] {
+            display: none;
+        }
+
+        .catalog__good > a:first-child {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 2;
+        }
+
+        .catalog__good > a:last-child {
+            margin: 0;
+        }
+
+        .catalog__good img {
+            max-width: 100%;
+        }
+
+        .catalog__description {
+            flex-grow: 2;
+        }
+
+        .catalog__pagination {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .catalog__page {
+            display: block;
+            width: fit-content;
+            margin: 8px;
+            padding: 8px;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: 500;
+            color: #212121;
+            background: #999999;
+            border: 2px solid #212121;
+            border-radius: 8px;
+        }
+
+        .catalog__page--current {
+            background: coral;
+        }
+    </style>
+</head>
+<body>
+{% include 'menu.html.twig' %}
+{% include 'greeting.html.twig' %}
+
+<div class="catalog">
+    <h1 class="catalog__title">{{ title }}</h1>
+
+    {% if result %}
+        <h3 class="catalog__subtitle">{{ result }}</h3>
+    {% endif %}
+
+    <div class="catalog__list">
+        {% for good in goods %}
+            <div class="catalog__good">
+                <a href="/good/{{ good.id }}">
+                    <img src="{{ good.preview_image }}" alt="{{ good.name }}">
+                    <h3>{{ good.name }}</h3>
+                    <p class="catalog__description">{{ good.description }}</p>
+                    <p>id: {{ good.id }}</p>
+                    <p>Цена: {{ good.price }} руб.</p>
+                </a>
+                <a href="/good/{{ good.id }}">Подробнее</a>
+                <h4>{{ good.cart_entry_id }}</h4>
+                <form method="post">
+                    <input type="text" name="good-id" value="{{ good.id }}" hidden>
+                    <input type="submit" value="Добавить в корзину">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="catalog__pagination">
+        {% for page in 1..pagesQuantity %}
+            <a class="catalog__page {% if page == currentPage %} catalog__page--current {% endif %}" href="{{ catalogPath }}?page={{ page }}">{{ page }}</a>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

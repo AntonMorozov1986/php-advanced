@@ -1,0 +1,13 @@
+{% if user %}
+    <h2 class="greeting">
+        <style>
+            .greeting {
+                font-size: 24px;
+                font-weight: 700;
+                text-align: center;
+                color: black;
+            }
+        </style>
+        Добро пожаловать, {{ user }}.
+    </h2>
+{% endif %}

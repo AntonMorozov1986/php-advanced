@@ -1,12 +1,30 @@
-version: '3'
+version: '3.7'
+
+networks:
+  default:
+    driver: bridge
+  traefik-net:
+    name: traefik_net
+    external: true
+
+volumes:
+  mysqldata: {}
+
 services:
   web:
     image: nginx:latest
-    ports:
-      - "8099:80"
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
       - ./:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT}-web.rule=Host(`${PROJECT_HOST}`)"
+      - "traefik.http.routers.${PROJECT}-web.entrypoints=web"
+      - "traefik.docker.network=traefik_net"
+    networks:
+      - default
+      - traefik-net
+
   php:
     build:
       context: .
@@ -14,26 +32,44 @@ services:
     volumes:
       - ./:/app
       - ./docker/php-fpm/php.ini:/usr/local/etc/php/conf.d/php.ini
+    networks:
+      - default
+      - traefik-net
+    labels:
+      - "traefik.enable=false"
+
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: 'adminpass'
-      MYSQL_USER: 'anton'
-      MYSQL_PASSWORD: 'antonpass'
-      MYSQL_DATABASE: 'php-advanced'
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
     volumes:
       - mysqldata:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "${DB_PORT}:3306"
+    networks:
+      - default
+    labels:
+      - "traefik.enable=false"
+
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin:5.2
     links:
       - mysql
     environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT}
       PMA_ARBITRARY: 1
-    ports:
-      - "8073:80"
-volumes:
-  mysqldata: {}
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASS}
+      PMA_ABSOLUTE_URI: "http://${PHP_MYADMIN_HOST}/"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_net"
+      - "traefik.http.routers.${PROJECT}-phpmyadmin.rule=Host(`${PHP_MYADMIN_HOST}`)"
+      - "traefik.http.routers.${PROJECT}-phpmyadmin.entrypoints=web"
+    networks:
+      - default
+      - traefik-net

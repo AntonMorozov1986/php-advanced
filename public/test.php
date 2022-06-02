@@ -1,7 +1,13 @@
 <?php
 //phpinfo();
+require_once dirname(__DIR__) . '/app/init_app.php';
 
-$pdo = new PDO('mysql:dbname=php-advanced;host=mysql', 'anton', 'antonpass', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$driver = $_ENV['DB_DRIVER'];
+$host = $_ENV['DB_HOST'];
+$name = $_ENV['DB_NAME'];
+$DSN = "{$driver}:host={$host};dbname={$name}";
+
+$pdo = new PDO($DSN, $_ENV['DB_USER'], $_ENV['DB_PASS'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
 $query = $pdo->query('SHOW VARIABLES like "version"');
 
