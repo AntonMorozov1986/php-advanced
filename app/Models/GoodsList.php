@@ -6,7 +6,7 @@ use PDO;
 
 class GoodsList
 {
-    static private function getDb()
+    static private function getDb(): PDO
     {
         return Database::getInstance()->getDb();
     }

@@ -4,6 +4,7 @@ namespace Classes;
 use Controllers\BaseController;
 use Controllers\MainPageController;
 use Controllers\MissingPageController;
+use phpDocumentor\Reflection\Types\This;
 
 class Router {
     private static array $routes = [
@@ -32,7 +33,12 @@ class Router {
         ],
     ];
 
-    public static function getController($mainRoute, ...$params): BaseController
+    public static function getRoutes()
+    {
+        return self::$routes;
+    }
+
+    public static function getController($mainRoute = '', ...$params): BaseController
     {
         if ($mainRoute === '') {
             return new MainPageController();

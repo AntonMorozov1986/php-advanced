@@ -7,7 +7,7 @@ use PDOException;
 
 class RegisterController extends BaseController
 {
-    public function __construct($params)
+    public function __construct($params = [])
     {
         parent::__construct($params);
 
